@@ -1,0 +1,142 @@
+﻿@model Progress.DTO.WorkoutTemplateDTO
+
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Help";
+}
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h1 class="fw-bold">About Progress</h1>
+        <p class="text-muted">
+            Progress is a lightweight workout tracking application designed with a
+            <strong>mobile-first</strong> mindset.
+            Its goal is to help you track training consistently without unnecessary complexity.
+        </p>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="mb-4">
+        <h4 class="fw-semibold">How Progress works</h4>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <i class="bi bi-layout-text-sidebar me-2"></i>
+                Create <strong>workout templates</strong> for your training routines
+            </li>
+
+            <li class="list-group-item">
+                <i class="bi bi-play-circle me-2"></i>
+                Start a workout directly from the <strong>Dashboard</strong>
+            </li>
+
+            <li class="list-group-item">
+                <i class="bi bi-check-circle me-2"></i>
+                Log completed sets and exercises during the workout
+            </li>
+
+            <li class="list-group-item">
+                <i class="bi bi-clock-history me-2"></i>
+                Finished workouts are automatically stored in your <strong>history</strong>
+            </li>
+        </ul>
+    </div>
+
+    <!-- TEMPLATES -->
+    <div class="mb-4">
+        <h4 class="fw-semibold">Workout templates</h4>
+
+        <p class="text-muted">
+            Templates represent the structure of your workout
+            (exercises, order, sets). Before start you can edit and delete workout.
+            Once a template is used for the first time(start), it becomes <strong>read-only</strong> 
+            and you can only delete this workout and make new one.
+        </p>
+    </div>
+   
+    <!-- STARTING WORKOUTS -->
+    <div class="mb-4">
+        <h4 class="fw-semibold">Starting a workout</h4>
+
+        <p class="text-muted">
+            When you click <strong>Start</strong> on a workout template, you always begin a <strong>new workout</strong> based on that template.<br />
+            If you want to continue your <strong>last workout</strong>, you need to load it from <strong>Finished Workouts</strong> by clicking <em>Start workout from this</em>.
+        </p>
+    </div>
+
+    <!-- WHY LOCKED -->
+    <div class="mb-4">
+        <h4 class="fw-semibold">Why templates are locked</h4>
+
+        <p class="text-muted mb-2">
+            Locking templates is a deliberate design decision.
+        </p>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <i class="bi bi-shield-lock me-2"></i>
+                Ensures consistency of historical workout data
+            </li>
+
+            <li class="list-group-item">
+                <i class="bi bi-graph-up me-2"></i>
+                Prevents past workouts from changing when templates are edited
+            </li>
+
+            <li class="list-group-item">
+                <i class="bi bi-journal-check me-2"></i>
+                Encourages creating new templates when your training evolves
+            </li>
+        </ul>
+    </div>
+
+    <!-- PHILOSOPHY -->
+    <div class="mb-4">
+        <h4 class="fw-semibold">Design philosophy</h4>
+
+        <p class="text-muted">
+            Progress focuses on:
+        </p>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <i class="bi bi-phone me-2"></i>
+                Mobile-first and distraction-free UI
+            </li>
+            <li class="list-group-item">
+                <i class="bi bi-lightning-charge me-2"></i>
+                Fast interaction during workouts
+            </li>
+            <li class="list-group-item">
+                <i class="bi bi-bar-chart me-2"></i>
+                Clear separation between planning and execution
+            </li>
+        </ul>
+    </div>
+    <!-- CONTACT / FEEDBACK FORM (Placeholder for future) -->
+    <div class="mb-4">
+        <h4 class="fw-semibold">Have feedback or questions? 💬</h4>
+
+        <div class="alert alert-info">
+            Feedback form will be implemented in the future for user messages.
+            For now, this is just a placeholder to show planned functionality.
+        </div>
+
+        <form>
+            <div class="mb-3">
+                <label for="email" class="form-label">Your Email</label>
+                <input type="email" class="form-control" id="email" placeholder="you@example.com" disabled />
+            </div>
+
+            <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" rows="4" placeholder="Write your feedback or question..." disabled></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" disabled>Send</button>
+        </form>
+    </div>
+
+</div>

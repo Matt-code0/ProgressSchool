@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Progress";
+}
+
+<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; font-family:sans-serif;">
+    <h1 style="margin-bottom:40px; font-size:3rem;">Progress</h1>
+    <p style="text-align:center; font-size:1.1rem;">Your demo account is ready in LOGIN</p>
+
+    <div style="display:flex; flex-direction:column; gap:15px; margin-bottom:20px; width:200px;">
+        <a asp-area="Identity" asp-page="/Account/Login" style="padding:15px; background-color:#007bff; color:white; text-decoration:none; border-radius:5px; text-align:center; font-size:1.2rem;">Login</a>
+        <a asp-area="Identity" asp-page="/Account/Register" style="padding:15px; background-color:#28a745; color:white; text-decoration:none; border-radius:5px; text-align:center; font-size:1.2rem;">Register</a>
+    </div>
+
+    <p style="text-align:center; font-size:1.1rem;">Your progress journal. Log, track, and push your limits.</p>
+</div>

@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Progress Dashboard</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+    <!-- HEADER -->
+    <nav class="navbar navbar-dark bg-dark px-3 py-2">
+        <!-- BRAND -->
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2"
+           asp-controller="Dashboard" asp-action="Index">
+            <i class="bi bi-barbell fs-5"></i>
+            <span>Progress🏋️‍♂️</span>
+        </a>
+
+        <!-- NAV ACTIONS -->
+        <div class="ms-auto d-flex align-items-center gap-2">
+
+            <a class="btn btn-outline-light btn-sm d-flex align-items-center gap-1"
+               asp-controller="Dashboard" asp-action="Index">
+                <i class="bi bi-speedometer2"></i>
+                <span class="d-none d-sm-inline">Dashboard</span>
+            </a>
+
+            <a class="btn btn-outline-light btn-sm d-flex align-items-center gap-1"
+               asp-controller="WorkoutTemplate" asp-action="Index">
+                <i class="bi bi-layout-text-sidebar"></i>
+                <span class="d-none d-sm-inline">Templates</span>
+            </a>
+
+            <a class="btn btn-outline-light btn-sm d-flex align-items-center gap-1"
+               asp-controller="Home" asp-action="Help">
+                <i class="bi bi-patch-question-fill"></i>
+                <span class="d-none d-sm-inline">Help</span>
+            </a>
+
+            <form method="post" asp-area="Identity" asp-page="/Account/Logout" class="m-0">
+                <button type="submit"
+                        class="btn btn-danger btn-sm d-flex align-items-center gap-1">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="d-none d-sm-inline">Logout</span>
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="container py-3 flex-grow-1">
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-center text-white-50 py-2 mt-auto d-flex flex-column align-items-center gap-1">
+
+        <span class="text-white-50 small ">
+            Logged as: @User.Identity?.Name
+        </span>
+
+        <small>© @DateTime.Now.Year – Progress</small>
+
+    </footer>
+  
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    <partial name="_ValidationScriptsPartial" />
+
+</body>
+</html>

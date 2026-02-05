@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Progress.DTO.WorkoutTemplateDTO>
+
+@{
+    Layout = "_DashboardLayout";
+}
+
+@{
+    ViewData["Title"] = "Workout Templates";
+}
+
+<h2 class="mb-4">@ViewData["Title"]</h2>
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-primary btn-lg">+ New Template</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        You don't have any workout templates yet.
+    </div>
+}
+else
+{
+    <div class="accordion" id="templatesAccordion">
+
+        @foreach (var template in Model)
+        {
+            var collapseId = $"collapse_{template.Id}";
+            var headingId = $"heading_{template.Id}";
+            var exercisesCount = template.Exercises?.Count ?? 0;
+
+            <div class="accordion-item mb-2">
+                <h2 class="accordion-header" id="@headingId">
+                    <button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#@collapseId"
+                            aria-expanded="false"
+                            aria-controls="@collapseId">
+                        <strong>@template.Name</strong> — @template.Split
+                        <span class="text-muted ms-2">(@exercisesCount exercises)</span>
+                    </button>
+                </h2>
+
+                <div id="@collapseId" class="accordion-collapse collapse"
+                     aria-labelledby="@headingId"
+                     data-bs-parent="#templatesAccordion">
+                    <div class="accordion-body">
+
+                        @if (exercisesCount == 0)
+                        {
+                            <p class="text-muted">No exercises included.</p>
+                        }
+                        else
+                        {
+                            <ul class="list-group mb-3">
+                                @foreach (var ex in template.Exercises)
+                                {
+                                    <li class="list-group-item">
+                                        <strong>@ex.Name</strong>
+
+                                        @if (ex.Series != null && ex.Series.Any())
+                                        {
+                                            <ul class="mt-2">
+                                                @foreach (var s in ex.Series)
+                                                {
+                                                    <li>
+                                                        Set @s.SetNumber: @s.Weight kg × @s.Reps reps
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        }
+
+                        <div class="d-flex gap-2">
+                            <a asp-action="Edit"
+                               asp-route-id="@template.Id"
+                               class="btn btn-warning">Edit</a>
+
+                            <form asp-action="Delete" asp-route-id="@template.Id"
+                                  method="post"
+                                  onsubmit="return confirm('Are you sure you want to delete this template?');">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

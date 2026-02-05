@@ -1,0 +1,157 @@
+﻿@model Progress.ViewModels.DashboardViewModel
+
+@{
+    Layout = "_DashboardLayout";
+}
+
+<div class="container mt-4">
+    <div class="row g-4">
+
+        <!-- Daily Motivation -->
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-3 h-100">
+                <h5 class="fw-bold mb-3"><i class="bi bi-lightning-charge me-2"></i>Daily Motivation</h5>
+                <blockquote class="blockquote text-center fs-5 mb-2" id="motivationText">
+                    "The best workout is the one you actually did and record 👌"
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- Last Workout -->
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-3 h-100">
+                <h5 class="fw-bold mb-3"><i class="bi bi-clock me-2"></i>Last Workout</h5>
+                @if (Model.LastWorkout != null)
+                {
+                    <p><strong>Name:</strong> @Model.LastWorkout.TemplateName</p>
+                    <p><strong>Split:</strong> @Model.LastWorkout.Split </p>
+                    <p>
+                        <strong>Started at:</strong> @(Model.LastWorkout.StartedAt.HasValue
+                                            ? Model.LastWorkout.StartedAt.Value.ToString("f")
+                                        : "Unknown")
+                </p>
+                <p><strong>Exercises:</strong> @(Model.LastWorkout.Exercises?.Count ?? 0)</p>
+                <a asp-controller="WorkoutLog" asp-action="Edit" asp-route-id="@Model.LastWorkout.Id" class="btn btn-success w-100 mt-2 d-flex align-items-center justify-content-center gap-1">
+                    <i class="bi bi-play-fill"></i>Continue Workout
+                </a>
+                                }
+                else
+                {
+                    <p class="text-muted">No previous workout found.</p>
+                }
+            </div>
+        </div>
+
+        <!-- Finished Workouts -->
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-3 h-100">
+                <h5 class="fw-bold mb-3"><i class="bi bi-check-circle me-2"></i>Finished Workouts</h5>
+                @if (Model.FinishedWorkouts != null && Model.FinishedWorkouts.Any())
+                {
+                    <div style="max-height: 300px; overflow-y: auto;">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var workout in Model.FinishedWorkouts)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center hover-highlight">
+                                    <div>
+                                        <a asp-controller="WorkoutLog"
+                                           asp-action="FinishedWorkoutDetail"
+                                           asp-route-id="@workout.Id" class="text-decoration-none">
+                                            <strong>@workout.TemplateName</strong>
+                                        </a><br />
+                                        <div class="text-muted small mt-1">
+                                            Split: @workout.Split <br />
+                                            @workout.StartedAt?.ToString("dd.MM.yyyy HH:mm") <br />
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-secondary">@workout.Exercises.Count exercises</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                    @if (Model.FinishedWorkouts.Count > 10)
+                    {
+                        <p class="text-muted mt-2 mb-0">Showing last @Model.FinishedWorkouts.Count workouts</p>
+                    }
+                }
+                else
+                {
+                    <p class="text-muted mb-0">No finished workouts yet.</p>
+                }
+            </div>
+        </div>
+
+        <!-- Workout Templates -->
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-3 h-100">
+                <h5 class="fw-bold mb-3"><i class="bi bi-layout-text-sidebar me-2"></i>Workout Templates</h5>
+                @if (Model.Templates != null && Model.Templates.Any())
+                {
+                    <ul class="list-group list-group-flush">
+                        @foreach (var template in Model.Templates)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center hover-highlight">
+                                <div>
+                                    <span class="fw-bold">@template.Name</span><br />
+                                    <span class="text-muted small">@template.Split</span>
+                                </div>
+                                <form asp-controller="Dashboard" asp-action="StartWorkout" method="post" class="m-0 p-0">
+                                    <input type="hidden" name="templateId" value="@template.Id" />
+                                    <button type="submit" class="btn btn-primary btn-sm d-flex align-items-center gap-1">
+                                        <i class="bi bi-play-fill"></i>Start
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-muted">No workout templates available.</p>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <style>
+        .hover-highlight:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+    </style>
+
+    <script>
+               const messages = [
+            "Don't skip leg day! 🦵🔥",
+            "Make it count! 💪✨",
+            "Push yourself a little more! 🚀",
+            "Have a great day! 😎☀️",
+            "Consistency beats intensity! ⏱️💯",
+            "Your future self will thank you! 🙏🏋️",
+            "Keep going! 🏃‍♂️💨",
+            "Stay strong! 🛡️💥",
+            "One step at a time! 🐾",
+            "Every rep matters! 🏋️‍♀️✅",
+            "Sweat now, shine later! 🌟💦",
+            "Feel the burn, earn the gain! 🔥🏆",
+            "Don't quit, get fit! 🏃‍♀️💪",
+            "Muscles loading… please wait! ⏳💪",
+            "Train insane or remain the same! 😈🏋️"
+        ];
+
+        function nextMotivation() {
+            const textElement = document.getElementById("motivationText");
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            textElement.innerText = messages[randomIndex];
+        }
+
+        // Automatická změna každých 5 sekund (5000 ms)
+        setInterval(nextMotivation, 5000);
+
+        // Volitelně – první změna hned po načtení stránky
+        window.onload = nextMotivation;
+    </script>
+}

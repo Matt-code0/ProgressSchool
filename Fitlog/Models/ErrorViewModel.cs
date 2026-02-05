@@ -1,0 +1,12 @@
+﻿using Progress.Models;
+
+
+namespace Progress.Models
+{
+    public class ErrorViewModel
+    {
+        public string? RequestId { get; set; }
+
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    }
+}
